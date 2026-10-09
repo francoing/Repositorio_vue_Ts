@@ -3,42 +3,33 @@
     clickable
     tag="a"
     target="_blank"
-    :href="props.link"
+    :href="link"
   >
     <q-item-section
-      v-if="props.icon"
+      v-if="icon"
       avatar
     >
-      <q-icon :name="props.icon" />
+      <q-icon :name="icon" />
     </q-item-section>
 
     <q-item-section>
-      <q-item-label>{{ props.label }}</q-item-label>
-      <q-item-label caption>{{ props.caption }}</q-item-label>
+      <q-item-label>{{ label }}</q-item-label>
+      <q-item-label caption>{{ caption }}</q-item-label>
     </q-item-section>
   </q-item>
 </template>
 
-<script setup>
-const props = defineProps({
-  label: {
-    type: String,
-    required: true
-  },
+<script setup lang="ts">
+export interface EssentialLinkProps {
+  label: string;
+  caption?: string;
+  link?: string;
+  icon?: string;
+};
 
-  caption: {
-    type: String,
-    default: ''
-  },
-
-  link: {
-    type: String,
-    default: '#'
-  },
-
-  icon: {
-    type: String,
-    default: ''
-  }
-})
+withDefaults(defineProps<EssentialLinkProps>(), {
+  caption: '',
+  link: '#',
+  icon: '',
+});
 </script>

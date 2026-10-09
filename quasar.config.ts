@@ -1,7 +1,7 @@
 // Configuration for your app
 // https://v2.quasar.dev/quasar-cli-vite/quasar-config-file
 
-import { defineConfig } from '#q-app'
+import { defineConfig } from '#q-app';
 
 export default defineConfig((/* ctx */) => {
   return {
@@ -39,6 +39,12 @@ export default defineConfig((/* ctx */) => {
         // node: 'node22'
       },
 
+      typescript: {
+        strict: true,
+        vueShim: true
+        // extendTsConfig (tsConfig) {}
+      },
+
       // https://v2.quasar.dev/quasar-cli-vite/page-routing-with-vue-router#filename-based-routing
       // filenameBasedRouting: true,
 
@@ -61,8 +67,9 @@ export default defineConfig((/* ctx */) => {
 
       vitePlugins: [
         ['vite-plugin-checker', {
+          vueTsc: true,
           eslint: {
-            lintCommand: 'eslint -c ./eslint.config.js "./src*/**/*.{js,mjs,cjs,vue}"',
+            lintCommand: 'eslint -c ./eslint.config.js "./src*/**/*.{ts,js,mjs,cjs,vue}"',
             useFlatConfig: true
           }
         }, { server: false }]
@@ -119,7 +126,7 @@ export default defineConfig((/* ctx */) => {
        */
       prodPort: 3000,
       middlewares: [
-        "render" // keep this as last one
+        'render' // keep this as last one
       ],
 
       // clientSideRenderingRoutes: [],
@@ -238,4 +245,4 @@ export default defineConfig((/* ctx */) => {
       extraScripts: []
     }
   }
-})
+});
