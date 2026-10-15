@@ -12,6 +12,7 @@ export default defineConfig((/* ctx */) => {
     // --> boot files are part of "main.js"
     // https://v2.quasar.dev/quasar-cli-vite/boot-files
     boot: [
+      'vue-query'
     ],
 
     // https://v2.quasar.dev/quasar-cli-vite/quasar-config-file#css
@@ -53,7 +54,7 @@ export default defineConfig((/* ctx */) => {
 
       // publicPath: '/',
       // define: {},
-      // defineEnv: {}
+       defineEnv: require('dotenv').config().parsed,
       // ignorePublicFolder: true,
       // minify: false,
       // distDir
