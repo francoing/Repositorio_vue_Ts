@@ -8,9 +8,10 @@ import FloatingButtons from '../components/FloatingButtons.vue';
 import NewIssueDialog from '../components/NewIssueDialog.vue';
 import { ref } from 'vue';
 import useLabels from '../composables/useLabels.js';
+import PaginationNumbers from '@/shared/components/PaginationNumbers.vue';
 
 
-const {issuesQuery} = useIssues()
+const {issuesQuery,currentPage,totalPages,totalPageNumbers,getPage} = useIssues()
 const { labelsQuery} = useLabels()
 
 const isOpen = ref<boolean>(false)
@@ -35,7 +36,13 @@ const openModal=() => {
             </div>
             <div class="col-xs-12 col-md-8">
                 <LoaderSpinner v-if="issuesQuery.isLoading.value" />
-                <IssueList v-else :issues="issuesQuery.data?.value || []" />
+                <IssueList v-else :issues="issuesQuery.data.value?.issues || []" />
+                <PaginationNumbers
+                    :currentPage="currentPage"
+                    :totalPages="totalPages"
+                    :totalPageNumbers="totalPageNumbers"
+                    @change-page="getPage"
+                />
             </div>
         </div>
         
@@ -54,6 +61,7 @@ const openModal=() => {
             }
         ]"
     />
+
 
     <NewIssueDialog 
     v-if="labelsQuery.data && isOpen"

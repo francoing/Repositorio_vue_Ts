@@ -66,6 +66,7 @@ const useIssue = (issueNumber : number, options?:Options) => {
         }).catch(noop)
 
     }
+    
     const setIssueCacheData = (issue:Issue) =>{
 
         queryClient.setQueryData(
@@ -75,8 +76,6 @@ const useIssue = (issueNumber : number, options?:Options) => {
         
     }
 
-    
-    
     return{
         issueQuery,
         commentsQuery,

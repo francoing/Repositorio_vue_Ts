@@ -1,6 +1,7 @@
 import { useMutation, useQueryClient } from "@tanstack/vue-query"
-import { State, type Issue } from "../interfaces/issue"
+import { type IssuesPage, State, type Issue } from "../interfaces/issue"
 import { githubApi } from "@/api/gitHubApi"
+
 
 
 interface Args {
@@ -48,11 +49,11 @@ const useIssueMutation = () => {
 
             // GitHub tarda unos segundos en incluir la nueva issue en GET /issues, así que un
             // refetch inmediato trae la lista vieja: la agregamos a mano con lo que devolvió el POST
-            queryClient.getQueriesData<Issue[]>({ queryKey: ['issues'] }).forEach(([queryKey, issues]) => {
+            queryClient.getQueriesData<IssuesPage>({ queryKey: ['issues'] }).forEach(([queryKey, issues]) => {
                 const [, filters] = queryKey as [string, IssuesFilters]
-                if (!Array.isArray(issues) || !matchesFilters(issue, filters)) return
+                if (!Array.isArray(issues?.issues) || !matchesFilters(issue, filters)) return
 
-                queryClient.setQueryData<Issue[]>(queryKey, [issue, ...issues])
+                queryClient.setQueryData<IssuesPage>(queryKey, {...issues,issues : [issue, ...issues.issues],totalCount: issues.totalCount+1})
             })
 
             // las marca como desactualizadas sin refetchear ahora (pisaría lo agregado);
@@ -66,7 +67,6 @@ const useIssueMutation = () => {
         }
           
     })
-
 
     return{
         issueMutation

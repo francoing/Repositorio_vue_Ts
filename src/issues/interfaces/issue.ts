@@ -2,6 +2,11 @@
 
 import type { Label } from "./labels";
 
+export interface IssuesPage {
+    issues: Issue[]
+    totalCount: number
+}
+
 
 export interface Issue {
   url:                      string;
